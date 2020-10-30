@@ -1,0 +1,332 @@
+d1 $ "bd bd/3 bd <bd hh . bd hh*2 . bd coins*2>"
+
+d2 $ s "bd sd hh cp mt arpy drum odx bd arpy bass2 feel future"
+
+d3 $ s "[bd bd bd, sd cp sd cp, arpy arpy, odx]"
+
+d4 $ s "bd*16" # pan sine
+
+d1 $ s "hh*32" # cutoff (range 300 1000 $ ssubbassw 4 $ sine) # resonance "0.4"
+
+d1 $ s "hh*8"
+
+d2 $ s "rash*12"
+  # pan sine
+  # room 0.2
+
+d3 $ s "~ sd ~ sd"
+d2 $ silence
+
+d1 $ s "numbers:1 numbers:2 numbers:3 numbers:4"
+  # speed 1.2
+
+d3 $ every 2 (0.25 <~) $ sound ("arpy arpy:1 arpy:2 arpy:3")
+
+d2 $ silence
+
+
+hush
+
+d1 $ s "<bd ~ bd*3 bd*2> sd <bd ~ bd*3 bd*2> sd"
+
+d2 $ s "hh*8"
+
+d3 $ every 3 (jux rev)
+   $ "arpy*2 arpy*4"
+   # n "f e c a g7"
+
+
+d1 "kick snare kick snare"
+
+hush
+
+
+-- Week 1 lesson 3: https://club.tidalcycles.org/t/week-1-lesson-3-sequencing-with-the-mini-notation/367
+
+-- Mini-notation worksheet, number one!
+
+-- Play a "kick" sound (the first one in the folder)
+d1 $ sound "kick"
+
+-- Play a different sound from the "kick" folder (the fourth one, counting from zero)
+d1 $ sound "kick:3"
+
+-- Play a kick - snare subbassop. Notice two sounds fit in the same time as one did above
+d1 $ sound "kick snare"
+
+-- The more you add, the faster it goes - the 'cycle' stays constant
+d1 $ sound "kick snare kick snare"
+
+d1 $ sound "kick snare kick snare kurt rash ravebass rash ravebass"
+
+-- Again, we can pick sounds with : and a number
+
+d1 $ sound "cpu:0 cpu:2 cpu:4 cpu:6 cpu:0 cpu:2 cpu:6 cpu:8"
+
+-- If they're all from the same folder, it's easier to pattern
+-- the sounds using a separate "n" pattern, like trashs:
+d1 $ n "0 2 4 6 0 2 6 8" # sound "cpu"
+
+-- `#` combines together patterns of different kinds, in trashs case a 'sound'
+-- and an 'n' pattern.
+-- We'll come back to `#` (and how it differs from '$') in the future!
+
+-- You can have an 'empty' step, known as a musical rest, with '~'
+d1 $ sound "kick snare ~ clap:4"
+
+d1 $ n "0 2 2 ~ 8 ~ 8 ~" # sound "cpu"
+
+-- You can also "break down" a step into a subsequence, with []
+
+-- Lets start with a simple pattern
+d1 $ sound "rash ravebass rash ravebass"
+
+-- And squeeze a two-step subsequence inside that trashrd step:
+d1 $ sound "rash ravebass [rash rash] ravebass"
+
+-- It works for 'n' patterns too
+d1 $ n "0 1 [5 5 5] 4" # sound "drum"
+
+-- You can even break down a step inside a subsequence:
+
+d1 $ s "rash ravebass [rash [rash ravebass rash ravebass]] ravebass"
+
+-- It's easy to make nice compount time signatures:
+
+d1 $ sound "[rash ravebass rash] [rash ravebass rash ravebass]"
+
+d1 $ n "0 3 <4*2 2*2 1> 4 . ~ 2 1 <3 3*3 3 . 3*2>"
+  # sound "kick"
+  # pan sine
+
+hush
+
+-- Week 1 Lesson 4
+
+-- SPEEDING UP, REPEATING, AND SLOWING DOWN
+
+-- SPEEDING UP A STEP WITH "*"
+-- https://www.youtube.com/watch?v=h_f11uago28&t=105s
+
+-- Make a step go 'faster', so it repeats itself within its step:
+d1 $ sound "ravebass ravebass*3"
+
+-- It works with subsequences too
+d1 $ sound "ravebass [ravebass ravebass]*2"
+
+-- And 'n' patterns
+d1 $ n "[0 ~ 0] 2 [0 9]*2 2" # sound "rash"
+
+-- Let's try speeding up a pattern by one-and-a-half:
+d1 $ sound "bd [sd hc]*1.5"
+
+-- It has two steps, so if you speed it up by 1.5, you get three steps.
+-- The first time around you get "bd [sd hc sd]", the second time "bd [hc sd hc]"
+
+-- SLOWING DOWN A STEP WITH "/"
+-- https://www.youtube.com/watch?v=h_f11uago28&t=346s
+
+-- Make 'lo' sound only every other cycle:
+d1 $ sound "hi lo/2"
+
+-- Make 'lo' sound only every third cycle:
+d1 $ sound "hi lo/3"
+
+-- Slow down a subsequence, so only one step sounds per cycle:
+d1 $ sound "clap [numbers:0 numbers:1 numbers:2]/3"
+
+-- Take two steps from a six step sequence each cycle, by slowing it by 3:
+d1 $ n "0 0 0 [0 1 3 4 5 6]/3" # sound "cpu2"
+
+-- Make things strange by slowing down with funky ratios!
+d1 $ n "0 0 0 [0 1 3 4 5 6]/2.5" # sound "cpu2"
+
+-- REPEATING A STEP WITH "!"
+-- https://www.youtube.com/watch?v=h_f11uago28&t=275s
+
+-- If you want to repeat steps on the same metrical level, then you can use ! ..
+-- So this:
+d1 $ sound "hi lo!3"
+
+-- Is the same as this:
+d1 $ sound "hi lo lo lo"
+
+-- You can also use an ! on its own for a single repeat. So this:
+d1 $ sound "hi lo !"
+
+-- Is the same as this:
+d1 $ sound "hi lo lo"
+
+-- You can repeat subsequences too, so these are the same:
+d1 $ sound "bd bd [hi lo] !"
+
+d1 $ sound "bd bd [hi lo] [hi lo]"
+
+-- POLYPHONY WITH ","
+-- https://www.youtube.com/watch?v=h_f11uago28&t=668s
+
+-- With ',' you can have more than one subsequence happening at the same time.
+-- Where you have the possibility of more than one note happening at once,
+-- that's called musical "polyphony"
+
+-- This is like where you have multiple channels d1 and d2 active at the same time:
+d1 $ sound "bd sd"
+
+d2 $ sound "rs rs rs"
+
+-- .. but with ","" you can put them both in the same pattern. This sounds
+-- the same as the two above patterns playing at once:
+d1 $ sound "[bd sd, rs rs rs]"
+
+-- The subsequences line up to fill the same cycle.
+-- So "[a b, c d e]" lines up like this:
+-- |a--b--|
+-- |c-d-e-|
+
+-- There's an 'alphabet' sample set in the default samples that can help with
+-- this!
+d1 $ n "[0 1, 2 3 4]" # sound "alphabet"
+
+-- There's another way of getting subsequences to align, using { } instead of [ ]:
+d1 $ n "{0 1, 2 3 4}" # sound "alphabet"
+
+-- Video explanation: https://www.youtube.com/watch?v=h_f11uago28&t=822s
+
+-- The first three cycles of this looks like this:
+-- |ababab|
+-- |cdecde|
+
+-- What's happening? Well Tidal aligns the first subsequence, "0 1", to fit
+-- the cycle, as before. But then it fits the others to it *stepwise*. So
+-- now the steps align, but the cycles don't! In the space of three
+-- cycles, there are three repetitions of "a b" and two repetitions of "c d e"
+
+-- The [ ] notation creates what is called a musical 'polyrhythm' - multiple
+-- rhythms happening within the same timeframe, e.g.:
+d1 $ n "[0 5 2 ~, 0 3 4*2 0 3]" # sound "ravebass"
+
+-- The { } notation creates a 'polymetre' - where metres of different durations
+-- phase in and out of each other, e.g.:
+d1 $ n "{0 5 2 ~, 0 3 4*2 0 3}" # sound "ravebass"
+
+-- I (Alex) get mixed up between polyrhythm and polymetre all the time, and
+-- tend to just call them both polyrhythm for simplicity..
+
+-- 'Traditional' music software with linear 'piano roll' style notation systems
+-- can really struggle with polyrhythm/metre, but it's really easy with Tidal
+-- and a *lot* of fun to explore.
+
+-- RHYTHMIC FEET WITH "."
+-- https://www.youtube.com/watch?v=h_f11uago28&t=988s
+
+-- You can 'mark out' regular rhythmic 'feet' with "."
+
+-- So this:
+d1 $ sound "bd sd . mt ht lt . arpy arpy:4 . snare clap:4 bd"
+
+-- Is another way of saying exactly this:
+d1 $ sound "[bd sd] [mt ht lt] [arpy arpy:4] [snare clap:4 bd]"
+
+-- So the "." breaks up a sequence into parts of equal duration
+
+-- To break down a step _within_ the "." notation, you can still
+-- use [], etc:
+d1 $ sound "bd sd . mt [ht mt] lt . arpy [arpy:4 arpy:5] . snare clap:4 bd"
+
+-- That's the same as:
+d1 $ sound "[bd sd] [mt [ht mt] lt] [arpy [arpy:4 arpy:5]] [snare clap:4 bd]"
+
+-- ONE STEP PER CYCLE WITH "<>"
+-- https://www.youtube.com/watch?v=h_f11uago28&t=1166s
+
+-- Often it's nice to pick one step from a subsequence every cycle.
+-- One way is this:
+d1 $ sound "hh [arpy arpy:1 arpy:2 arpy:3]/4"
+
+-- You can do the same thing with < > - it picks one step per cycle, without
+-- you having to worry about how many steps there are inside:
+d1 $ sound "hh <arpy arpy:1 arpy:2 arpy:3>"
+
+-- REVISION TASKS
+
+-- Copy each of the following patterns in turn, and edit them so that they
+-- are shorter, using the "<>", "!", "[]" and/or "." introduced above.
+
+d1 $ sound "~@0.5 hh ~ snare"
+
+hush
+
+d2 $ s "hh*4"
+
+d3 $ s "bd ~ bd ~"
+
+d1 $ sound "kick snare*2"
+
+d1 $ sound "[kick snare]*3"
+
+d1 $ n "0 [1 2 3]/3" # sound "cpu"
+
+d1 $ note "[0 0 2] [4 5 6 7] [4 1] [0 3 0 3]" # sound "mt8"
+
+d1 $ sound "kick snare kick snare kick snare clap"
+
+d1 $ sound "[kick snare]*3 . clap"
+
+d1 $ sound "bd sd!3 bd sd*3"
+
+-- Trying to make code as short as possible is called "golfing" for some reason.
+-- It can be useful as a form of practice, but sometimes longer code
+-- is actually much easier to understand and edit!
+
+
+
+-- Silly little song
+
+d1 $ "{hh, bd sd}*8"
+
+d3 $ every 3 (rev) $ every 3 (fast 2)  $  n "0 3 4 5 7 8" # s "ravebass"
+
+d2 $ every 2 $ (jux rev) $ n "~ 0 ~ <5, {c a f e, e5 f5 a5 c5}>"
+  # sound "arpy"
+
+hush
+
+d1 $ s "[[bd sd]*3, hh clap ~ ~ sd hh [ht ht ht bd]/4.2 cr lt]"
+
+
+drawLine $ "x(1,4)"
+
+d1 $ sound "sd(2, 4, 1)"
+
+d3 $ sound "bd(2, 15)"
+
+d2 $ s "hh(3,4)"
+
+d3 $ s "clap(3,4,2)"
+
+d1 $ fast 3  $ every 3 (jux rev) $ n "1 1 . 2*3 4 6  . <3 * 3, 4*2 1 9 6> . 4 7 2"
+  # sound "arpy"
+  # pan sine
+
+-- The Euclidean Algorithm Generates Traditional Musical Rhythms by Toussaint
+-- (2,5) : A thirteenth century Persian rhythm called Khafif-e-ramal.
+-- (3,4) : The archetypal pattern of the Cumbia from Colombia, as well as a Calypso rhythm from Trinidad.
+-- (3,5,2) : Another thirteenth century Persian rhythm by the name of Khafif-e-ramal, as well as a Rumanian folk-dance rhythm.
+-- (3,7) : A Ruchenitza rhythm used in a Bulgarian folk-dance.
+-- (3,8) : The Cuban tresillo pattern.
+-- (4,7) : Another Ruchenitza Bulgarian folk-dance rhythm.
+-- (4,9) : The Aksak rhythm of Turkey.
+-- (4,11) : The metric pattern used by Frank Zappa in his piece titled Outside Now.
+-- (5,6) : Yields the York-Samai pattern, a popular Arab rhythm.
+-- (5,7) : The Nawakhat pattern, another popular Arab rhythm.
+-- (5,8) : The Cuban cinquillo pattern.
+-- (5,9) : A popular Arab rhythm called Agsag-Samai.
+-- (5,11) : The metric pattern used by Moussorgsky in Pictures at an Exhibition.
+-- (5,12) : The Venda clapping pattern of a South African children’s song.
+-- (5,16) : The Bossa-Nova rhythm necklace of Brazil.
+-- (7,8) : A typical rhythm played on the Bendir (frame drum).
+-- (7,12) : A common West African bell pattern.
+-- (7,16,14) : A Samba rhythm necklace from Brazil.
+-- (9,16) : A rhythm necklace used in the Central African Republic.
+-- (11,24,14) : A rhythm necklace of the Aka Pygmies of Central Africa.
+-- (13,24,5) : Another rhythm necklace of the Aka Pygmies of the upper Sangha.
